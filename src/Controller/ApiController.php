@@ -21,6 +21,8 @@ class ApiController extends AbstractController
             );
         }
 
+
+
         return new JsonResponse($api_request);
 
         // return $this->render('api/index.html.twig', [

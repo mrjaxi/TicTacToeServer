@@ -16,7 +16,14 @@ interface UserRepositoryInterface
      * @param $id int
      * @return Users
      */
-    public function one(int $id) : Users;
+    public function oneById(int $id) : Users;
+
+    /**
+     * @param $userName string
+     * @param $password string
+     * @return Users
+     */
+    public function findOneByNameAndPassword(string $userName, string $password) : Users;
 
     /**
      * @param Users $user
