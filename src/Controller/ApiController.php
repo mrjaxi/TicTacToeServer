@@ -10,14 +10,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ApiController extends AbstractController
 {
-    #[Route('/', name: 'index')]
-    public function index(): Response
-    {
-        return $this->render('conference/index.html.twig', [
-            'controller_name' => 'ConferenceController',
-        ]);
-    }
-
     #[Route('/api/method.{name<\w+>}', name: 'api')]
     public function api(string $name, Request $request): Response
     {
