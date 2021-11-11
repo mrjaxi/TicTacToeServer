@@ -37,7 +37,7 @@ class ApiController extends AbstractController
                 'gameToken' => $request->query->get('game_token'),
                 'userPassword' => $this->encoder->encodePassword(new User(), "Password"),
             );
-        } else if ($name == "loginUser"){
+            } else if ($name == "loginUser"){
             $userLogin = $request->query->get('userLogin');
             $userPassword = $request->query->get('userPassword');
 

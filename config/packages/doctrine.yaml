@@ -22,3 +22,15 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Users/Model'
                 prefix: 'App\Users\Model'
                 alias: App\Users\Model
+            GameData:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/GameData/Model'
+                prefix: 'App\GameData\Model'
+                alias: App\GameData\Model
+            Game:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Game/Model'
+                prefix: 'App\Game\Model'
+                alias: App\Game\Model
