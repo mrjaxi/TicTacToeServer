@@ -10,9 +10,9 @@ interface UsersServiceInterface
     /**
      * @param $userName
      * @param $userPassword
-     * @return Users
+     * @return string
      */
-    public function createUser(string $userName, string $userPassword) : Users;
+    public function createUser(string $userName, string $userPassword) : string;
 
     /**
      * @param $userName
@@ -27,4 +27,9 @@ interface UsersServiceInterface
      * @return bool
      */
     public function checkUserPasswordHash(int $id, string $incomePassword) : bool;
+
+    /**
+     * @return array
+     */
+    public function getUsers() : array;
 }

@@ -50,6 +50,21 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
 
     /**
      * @param $userName string
+     * @return bool
+     */
+    public function oneByUserName(string $userName): bool
+    {
+        $user = parent::findOneBy(['username' => $userName]);
+
+        if ($user == null){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * @param $userName string
      * @param $password string
      * @return Users
      */
@@ -59,7 +74,7 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
          * @var Users $user
          */
         $user = parent::findOneBy([
-            'user_name' => $userName,
+            'username' => $userName,
             'password' => $password
         ]);
 
@@ -73,7 +88,6 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
     /**
      * @param Users $user
      * @return Users
-     * @throws ORMException
      */
     public function save(Users $user): Users
     {
@@ -86,8 +100,6 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
     /**
      * @param Users $users
      * @return Users
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     public function update(Users $users): Users
     {

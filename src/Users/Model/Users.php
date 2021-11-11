@@ -23,7 +23,7 @@ class Users
      * @var string
      * @ORM\Column(type="string", length=50)
      */
-    private $userName;
+    private $username;
 
     /**
      * @var string
@@ -33,12 +33,12 @@ class Users
 
     /**
      * User constructor.
-     * @param $userName
+     * @param $username
      * @param $password
      */
-    public function __construct($userName, $password)
+    public function __construct($username, $password)
     {
-        $this->userName = $userName;
+        $this->username = $username;
         $this->password = $password;
     }
 
@@ -55,7 +55,7 @@ class Users
      */
     public function getUserName()
     {
-        return $this->userName;
+        return $this->username;
     }
 
     /**
@@ -63,7 +63,7 @@ class Users
      */
     public function setUserName($userName): void
     {
-        $this->userName = $userName;
+        $this->username = $userName;
     }
 
     /**

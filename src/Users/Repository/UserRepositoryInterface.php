@@ -20,6 +20,12 @@ interface UserRepositoryInterface
 
     /**
      * @param $userName string
+     * @return bool
+     */
+    public function oneByUserName(string $userName) : bool;
+
+    /**
+     * @param $userName string
      * @param $password string
      * @return Users
      */
