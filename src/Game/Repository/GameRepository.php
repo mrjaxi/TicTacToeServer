@@ -44,6 +44,10 @@ class GameRepository extends ServiceEntityRepository implements GameRepositoryIn
          */
         $game = parent::findOneBy(['userid' => $id]);
 
+        if ($game == null){
+            throw new \RuntimeException("Игра не найдена");
+        }
+
         return $game;
     }
 
