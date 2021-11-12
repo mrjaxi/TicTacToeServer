@@ -3,7 +3,6 @@
 
 namespace App\Users\Service;
 
-use App\Users\Model\Users;
 
 interface UsersServiceInterface
 {
