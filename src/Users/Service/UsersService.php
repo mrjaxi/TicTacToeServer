@@ -6,6 +6,7 @@ namespace App\Users\Service;
 
 use App\Users\Model\Users;
 use App\Users\Repository\UserRepositoryInterface;
+use Exception;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
 
@@ -21,9 +22,10 @@ class UsersService implements UsersServiceInterface
     }
 
     /**
-     * @param $userName
-     * @param $userPassword
+     * @param string $userName
+     * @param string $userPassword
      * @return string
+     * @throws Exception
      */
     public function createUser(string $userName, string $userPassword): string
     {
@@ -35,12 +37,12 @@ class UsersService implements UsersServiceInterface
             throw new \RuntimeException("Пользователь с таким именем существует");
         }
 
-        $user = new Users($userName, $userPassword);
+        $token = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+
+        $user = new Users($userName, $userPassword, $token);
         $this->repository->save($user);
 
-        $now_time = time();
-
-        return $this->encoder->encodePassword(new User(),"{$user->getUserName()}{$now_time}");
+        return $token;
     }
 
     /**
@@ -56,11 +58,13 @@ class UsersService implements UsersServiceInterface
     /**
      * @param $userName
      * @param $userPassword
-     * @return bool
+     * @return Users
      */
-    public function loginUser(string $userName, string $userPassword): bool
+    public function loginUser(string $userName, string $userPassword): Users
     {
-        return $this->repository->findOneByNameAndPassword($userName, $userPassword) === true ? true : false;
+        $user = $this->repository->findOneByNameAndPassword($userName, $userPassword);
+
+        return $user == null ? null : $user;
     }
 
     /**
@@ -69,5 +73,16 @@ class UsersService implements UsersServiceInterface
     public function getUsers(): array
     {
         return $this->repository->all();
+    }
+
+    public function updateUserCredentials($user) : bool
+    {
+        $response = $this->repository->update($user);
+
+        if ($response == null){
+            return false;
+        } else {
+            return true;
+        }
     }
 }

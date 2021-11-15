@@ -32,14 +32,22 @@ class Users
     private $password;
 
     /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $usertoken;
+
+    /**
      * User constructor.
      * @param $username
      * @param $password
+     * @param $usertoken
      */
-    public function __construct($username, $password)
+    public function __construct($username, $password, $usertoken)
     {
         $this->username = $username;
         $this->password = $password;
+        $this->usertoken = $usertoken;
     }
 
     /**
@@ -80,5 +88,21 @@ class Users
     public function setPassword($password): void
     {
         $this->password = $password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsertoken(): string
+    {
+        return $this->usertoken;
+    }
+
+    /**
+     * @param string $usertoken
+     */
+    public function setUsertoken(string $usertoken): void
+    {
+        $this->usertoken = $usertoken;
     }
 }

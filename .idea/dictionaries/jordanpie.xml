@@ -3,9 +3,11 @@
     <words>
       <w>gamedata</w>
       <w>imagesid</w>
+      <w>logouted</w>
       <w>matchid</w>
       <w>relmatchid</w>
       <w>userid</w>
+      <w>usertoken</w>
     </words>
   </dictionary>
 </component>

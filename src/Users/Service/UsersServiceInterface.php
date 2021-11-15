@@ -4,11 +4,13 @@
 namespace App\Users\Service;
 
 
+use App\Users\Model\Users;
+
 interface UsersServiceInterface
 {
     /**
-     * @param $userName
-     * @param $userPassword
+     * @param string $userName
+     * @param string $userPassword
      * @return string
      */
     public function createUser(string $userName, string $userPassword) : string;
@@ -16,9 +18,9 @@ interface UsersServiceInterface
     /**
      * @param $userName
      * @param $userPassword
-     * @return bool
+     * @return Users
      */
-    public function loginUser(string $userName, string $userPassword) : bool;
+    public function loginUser(string $userName, string $userPassword) : Users;
 
     /**
      * @param int $id
@@ -31,4 +33,10 @@ interface UsersServiceInterface
      * @return array
      */
     public function getUsers() : array;
+
+    /**
+     * @param Users $user
+     * @return bool
+     */
+    public function updateUserCredentials(Users $user) : bool;
 }

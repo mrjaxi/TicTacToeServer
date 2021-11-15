@@ -76,10 +76,8 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
             'password' => $password
         ]);
 
-        if ($user == null){
-            throw new \RuntimeException("Пользователь не найден");
-        }
-
+//        $display = explode(",", $password)[2];
+//        .str_replace("p=", "", $display)
         return $user;
     }
 
@@ -99,7 +97,7 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
      * @param Users $users
      * @return Users
      */
-    public function update(Users $users): Users
+    public function update(Users $users) : Users
     {
         $this->manager->flush();
 
