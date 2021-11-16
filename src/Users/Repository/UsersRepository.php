@@ -8,6 +8,7 @@ use App\Users\Model\Users;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Exception\RuntimeException;
 
 class UsersRepository extends ServiceEntityRepository implements UserRepositoryInterface
 {
@@ -76,6 +77,9 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
             'password' => $password
         ]);
 
+        if ($user == null){
+            throw new \RuntimeException("Пользователь не найден");
+        }
 //        $display = explode(",", $password)[2];
 //        .str_replace("p=", "", $display)
         return $user;
