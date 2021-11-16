@@ -86,6 +86,29 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
     }
 
     /**
+     * @param $token string
+     * @return Users
+     */
+    public function findOneByToken(string $token) : Users
+    {
+        if (!isset($token)){
+            throw new \RuntimeException("Не передан токен findOneByToken");
+        }
+        /**
+         * @var Users $user
+         */
+        $user = parent::findOneBy([
+            'usertoken' => $token
+        ]);
+
+        if (!isset($user)){
+            throw new \RuntimeException("Пользователя не удалось найти findOneByNameAndToken");
+        }
+
+        return $user;
+    }
+
+    /**
      * @param Users $user
      * @return Users
      */

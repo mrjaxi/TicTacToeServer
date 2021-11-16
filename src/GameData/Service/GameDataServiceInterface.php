@@ -12,9 +12,9 @@ interface GameDataServiceInterface
      * @param $rightState
      * @param $imagesid
      * @param $date
-     * @return bool
+     * @return GameData
      */
-    public function createGameData($bot, $winner, $leftState, $rightState, $imagesid, $date) : bool;
+    public function createGameData($bot, $winner, $leftState, $rightState, $imagesid, $date) : GameData;
 
     /**
      * @param $id

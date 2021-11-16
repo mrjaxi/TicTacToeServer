@@ -8,16 +8,13 @@ use App\Users\Model\Users;
 use App\Users\Repository\UserRepositoryInterface;
 use Exception;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use App\Entity\User;
 
 class UsersService implements UsersServiceInterface
 {
     private $repository;
-    private $encoder;
 
     public function __construct(UserRepositoryInterface $repository, UserPasswordEncoderInterface $encoder)
     {
-        $this->encoder = $encoder;
         $this->repository = $repository;
     }
 
@@ -29,7 +26,7 @@ class UsersService implements UsersServiceInterface
      */
     public function createUser(string $userName, string $userPassword): string
     {
-        if ($userName == null or $userPassword == null) {
+        if (!isset($userName, $userPassword)) {
             throw new \RuntimeException("Все поля должны быть заполнены");
         }
 
@@ -43,16 +40,6 @@ class UsersService implements UsersServiceInterface
         $this->repository->save($user);
 
         return $token;
-    }
-
-    /**
-     * @param int $id
-     * @param string $incomePassword
-     * @return bool
-     */
-    public function checkUserPasswordHash(int $id, string $incomePassword): bool
-    {
-        return $this->repository->oneById($id)->getPassword() === $incomePassword ? true : false;
     }
 
     /**
@@ -84,5 +71,14 @@ class UsersService implements UsersServiceInterface
         } else {
             return true;
         }
+    }
+
+    /**
+     * @param string $token
+     * @return Users
+     */
+    public function getUserByToken(string $token): Users
+    {
+        return $this->repository->findOneByToken($token);
     }
 }

@@ -32,6 +32,12 @@ interface UserRepositoryInterface
     public function findOneByNameAndPassword(string $userName, string $password) : Users;
 
     /**
+     * @param $token string
+     * @return Users
+     */
+    public function findOneByToken(string $token) : Users;
+
+    /**
      * @param Users $user
      * @return Users
      */

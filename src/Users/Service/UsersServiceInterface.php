@@ -23,11 +23,10 @@ interface UsersServiceInterface
     public function loginUser(string $userName, string $userPassword) : Users;
 
     /**
-     * @param int $id
-     * @param string $incomePassword
-     * @return bool
+     * @param string $token
+     * @return Users
      */
-    public function checkUserPasswordHash(int $id, string $incomePassword) : bool;
+    public function getUserByToken(string $token) : Users;
 
     /**
      * @return array

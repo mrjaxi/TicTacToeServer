@@ -21,17 +21,17 @@ class GameDataService implements GameDataServiceInterface
      * @param $rightState
      * @param $imagesid
      * @param $date
-     * @return bool
+     * @return GameData
      */
-    public function createGameData($bot, $winner, $leftState, $rightState, $imagesid, $date): bool
+    public function createGameData($bot, $winner, $leftState, $rightState, $imagesid, $date): GameData
     {
         if (!isset($bot, $winner, $leftState, $rightState, $imagesid, $date)){
-            return false;
+            throw new \RuntimeException("Не все поля заполнены createGameData");
         } else {
             $gamedata = new GameData($bot, $winner, $leftState, $rightState, $imagesid, $date);
             $this->repository->save($gamedata);
 
-            return true;
+            return $gamedata;
         }
     }
 
