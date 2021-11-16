@@ -43,6 +43,10 @@ class ApiController extends AbstractController
                     "users" => $this->usersService->getUsers()
                 );
                 break;
+            default:
+                $api_request['response'] = array(
+                    "error" => "Несуществующий api"
+                );
         }
 
         return $this->json($api_request);

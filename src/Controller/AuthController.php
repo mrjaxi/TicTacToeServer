@@ -23,55 +23,65 @@ class AuthController extends AbstractController
     #[Route('/login', name: 'login')]
     public function login(Request $request): Response
     {
-        $userLogin = $request->query->get('userLogin');
-        $userPassword = md5($request->query->get('userPassword'));
+        try {
+            $userLogin = $request->query->get('userLogin');
+            $userPassword = md5($request->query->get('userPassword'));
 
-        if (!isset($userLogin, $userPassword)){
-            throw new \RuntimeException("Поля userLogin и userPassword должны быть не пустыми");
-        }
-
-        $user = $this->usersService->loginUser($userLogin, $userPassword);
-
-        if ($user){
-            try {
-                $token = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
-
-                $user->setUsertoken($token);
-
-                $this->usersService->updateUserCredentials(
-                    $user
-                );
-
-                $api_request['response'] = array(
-                    "method" => "loginUser",
-                    "userName" => $userLogin,
-                    "userPassword" => $userPassword,
-                    "token" => $token
-                );
-            } catch (\Exception $e) {
+            if (!isset($userLogin, $userPassword)) {
+                throw new \RuntimeException("Поля userLogin и userPassword должны быть не пустыми");
             }
-        } else {
-            throw new \RuntimeException("Неверный логин или пароль pass: {$userPassword}");
-        }
 
-        return $this->json($api_request);
+            $user = $this->usersService->loginUser($userLogin, $userPassword);
+
+            if ($user) {
+                try {
+                    $token = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+
+                    $user->setUsertoken($token);
+
+                    $this->usersService->updateUserCredentials(
+                        $user
+                    );
+
+                    $api_request['response'] = array(
+                        "method" => "loginUser",
+                        "userName" => $userLogin,
+                        "userPassword" => $userPassword,
+                        "token" => $token
+                    );
+                } catch (\Exception $e) {
+                }
+            } else throw new \RuntimeException("Неверный логин или пароль pass: {$userPassword}");
+
+            return $this->json($api_request);
+        }catch(\RuntimeException $e){
+            return $this->json( array("error" => $e->getMessage()) );
+        }
     }
 
     #[Route('/register', name: 'register')]
     public function register(Request $request): JsonResponse
     {
-        $userLogin = $request->query->get('userLogin');
-        $userPassword = md5($request->query->get('userPassword'));
+        try {
+            $userLogin = $request->query->get('userLogin');
+            $userPassword = md5($request->query->get('userPassword'));
 
-        $returnValue = $this->usersService->createUser($userLogin, $userPassword);
+            if (!isset($userLogin, $userPassword)) {
+                throw new \RuntimeException("Поля userLogin и userPassword должны быть не пустыми");
+            }
 
-        $api_request['response'] = array(
-            "method" => "registerUser",
-            "userName" => $userLogin,
-            "userPassword" => $userPassword,
-            "token" => $returnValue
-        );
+            $returnValue = $this->usersService->createUser($userLogin, $userPassword);
 
-        return $this->json($api_request);
+            $api_request['response'] = array(
+                "method" => "registerUser",
+                "userName" => $userLogin,
+                "userPassword" => $userPassword,
+                "token" => $returnValue
+            );
+
+            return $this->json($api_request);
+        } catch (\RuntimeException $e) {
+            return $this->json( array("error" => $e->getMessage()) );
+        }
     }
 }

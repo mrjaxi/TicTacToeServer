@@ -26,10 +26,6 @@ class UsersService implements UsersServiceInterface
      */
     public function createUser(string $userName, string $userPassword): string
     {
-        if (!isset($userName, $userPassword)) {
-            throw new \RuntimeException("Все поля должны быть заполнены");
-        }
-
         if ($this->repository->oneByUserName($userName) == true){
             throw new \RuntimeException("Пользователь с таким именем существует");
         }
@@ -51,7 +47,7 @@ class UsersService implements UsersServiceInterface
     {
         $user = $this->repository->findOneByNameAndPassword($userName, $userPassword);
 
-        return $user == null ? null : $user;
+        return $user;
     }
 
     /**
@@ -66,11 +62,7 @@ class UsersService implements UsersServiceInterface
     {
         $response = $this->repository->update($user);
 
-        if ($response == null){
-            return false;
-        } else {
-            return true;
-        }
+        return $response == null ? false : true;
     }
 
     /**
@@ -79,6 +71,10 @@ class UsersService implements UsersServiceInterface
      */
     public function getUserByToken(string $token): Users
     {
+        if (!isset($token)){
+            throw new \RuntimeException("Не передан токен");
+        }
+
         return $this->repository->findOneByToken($token);
     }
 }

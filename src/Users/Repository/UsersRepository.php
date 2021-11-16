@@ -80,8 +80,7 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
         if ($user == null){
             throw new \RuntimeException("Пользователь не найден");
         }
-//        $display = explode(",", $password)[2];
-//        .str_replace("p=", "", $display)
+
         return $user;
     }
 
@@ -91,9 +90,6 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
      */
     public function findOneByToken(string $token) : Users
     {
-        if (!isset($token)){
-            throw new \RuntimeException("Не передан токен findOneByToken");
-        }
         /**
          * @var Users $user
          */
