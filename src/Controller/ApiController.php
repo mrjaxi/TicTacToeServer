@@ -21,7 +21,7 @@ class ApiController extends AbstractController
 
     private $usersService;
 
-    public function __construct(UserPasswordEncoderInterface $encoder, UsersServiceInterface $usersService)
+    public function __construct(UsersServiceInterface $usersService)
     {
         $this->usersService = $usersService;
     }
