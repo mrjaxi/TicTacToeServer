@@ -48,4 +48,13 @@ class GameDataService implements GameDataServiceInterface
     {
         return $this->repository->oneById($id);
     }
+
+    /**
+     * @param string $token
+     * @return GameData[]
+     */
+    public function getGamesByToken(string $token) : array
+    {
+        return $this->repository->findGamesByToken($token);
+    }
 }

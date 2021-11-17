@@ -8,7 +8,7 @@ use App\Game\Model\Game;
 interface GameRepositoryInterface
 {
     /**
-     * @param $id int
+     * @param int $id
      * @return Game
      */
     public function findById($id) : Game;
@@ -17,10 +17,16 @@ interface GameRepositoryInterface
      * @param $id int
      * @return Game
      */
-    public function findByUserId($id) : Game;
+    public function findOneByUserId($id): Game;
 
     /**
-     * @param $id int
+     * @param int $id
+     * @return Game[]
+     */
+    public function findByUserId($id): array;
+
+    /**
+     * @param int $id
      * @return Game
      */
     public function findByGameDataId($id) : Game;

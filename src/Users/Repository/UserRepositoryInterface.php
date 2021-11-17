@@ -19,10 +19,16 @@ interface UserRepositoryInterface
     public function oneById(int $id) : Users;
 
     /**
+     * @param string $name
+     * @return Users
+     */
+    public function oneByUserName(string $name): Users;
+
+    /**
      * @param $userName string
      * @return bool
      */
-    public function oneByUserName(string $userName) : bool;
+    public function oneByUserNameBool(string $userName) : bool;
 
     /**
      * @param $userName string
@@ -48,4 +54,16 @@ interface UserRepositoryInterface
      * @return Users
      */
     public function update(Users $users) : Users;
+
+    /**
+     * @param int $id
+     * @return string
+     */
+    public function deleteById(int $id) : string;
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    public function deleteByName(string $name) : string;
 }

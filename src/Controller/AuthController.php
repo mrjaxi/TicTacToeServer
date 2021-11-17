@@ -34,27 +34,26 @@ class AuthController extends AbstractController
             $user = $this->usersService->loginUser($userLogin, md5($userPassword));
 
             if ($user) {
-                try {
-                    $token = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+                $token = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
 
-                    $user->setUsertoken($token);
+                $user->setUsertoken($token);
 
-                    $this->usersService->updateUserCredentials(
-                        $user
-                    );
+                $this->usersService->updateUserCredentials(
+                    $user
+                );
 
-                    $api_request['response'] = array(
-                        "method" => "loginUser",
-                        "userName" => $userLogin,
-                        "userPassword" => $userPassword,
-                        "token" => $token
-                    );
-                } catch (\Exception $e) {
-                }
+                $api_request['response'] = array(
+                    "method" => "loginUser",
+                    "userName" => $userLogin,
+                    "userPassword" => $userPassword,
+                    "token" => $token
+                );
             } else throw new \RuntimeException("Неверный логин или пароль pass: {$userPassword}");
 
             return $this->json($api_request);
         }catch(\RuntimeException $e){
+            return $this->json( array("error" => $e->getMessage()) );
+        }catch (\Exception $e){
             return $this->json( array("error" => $e->getMessage()) );
         }
     }
@@ -70,8 +69,8 @@ class AuthController extends AbstractController
                 throw new \RuntimeException("Поля userLogin и userPassword должны быть не пустыми");
             }
 
-            if (strlen($userPassword) < 8){
-                throw new \RuntimeException("Пароль должен иметь не меньше 8 символов");
+            if (strlen($userPassword) < 4){
+                throw new \RuntimeException("Пароль должен иметь не меньше 4 символов");
             }
 
             $returnValue = $this->usersService->createUser($userLogin, md5($userPassword));

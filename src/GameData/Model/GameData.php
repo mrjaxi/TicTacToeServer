@@ -4,6 +4,7 @@
 namespace App\GameData\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Array_;
 
 /**
  * Class GameData
@@ -46,9 +47,9 @@ class GameData
 
     /**
      * @var array
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="array")
      */
-    private $imagesid;
+    private $imagesId;
 
     /**
      * @var string
@@ -58,21 +59,21 @@ class GameData
 
     /**
      * GameData constructor.
-     * @param $bot
-     * @param $winner
-     * @param $leftState
-     * @param $rightState
-     * @param $imagesid
-     * @param $date
+     * @param bool $bot
+     * @param bool $winner
+     * @param string $leftState
+     * @param string $rightState
+     * @param array $imagesId
+     * @param string $date
      */
-    public function __construct($bot, $winner, $leftState, $rightState, $imagesid, $date)
+    public function __construct(bool $bot,bool $winner,string $leftState,string $rightState,array $imagesId,string $date)
     {
-        $this->bot = $bot;
-        $this->winner = $winner;
-        $this->leftState = $leftState;
-        $this->rightState = $rightState;
-        $this->imagesid = $imagesid;
-        $this->date = $date;
+        $this->setBot($bot);
+        $this->setWinner($winner);
+        $this->setLeftState($leftState);
+        $this->setRightState($rightState);
+        $this->setImagesid($imagesId);
+        $this->setDate($date);
     }
 
     /**
@@ -150,17 +151,17 @@ class GameData
     /**
      * @return array
      */
-    public function getImagesid(): array
+    public function getImagesId(): array
     {
-        return $this->imagesid;
+        return $this->imagesId;
     }
 
     /**
-     * @param array $imagesid
+     * @param array $imagesId
      */
-    public function setImagesid(array $imagesid): void
+    public function setImagesid(array $imagesId): void
     {
-        $this->imagesid = $imagesid;
+        $this->imagesId = $imagesId;
     }
 
     /**

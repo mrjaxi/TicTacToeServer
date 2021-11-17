@@ -6,21 +6,27 @@ use App\GameData\Model\GameData;
 interface GameDataServiceInterface
 {
     /**
-     * @param $bot
-     * @param $winner
-     * @param $leftState
-     * @param $rightState
-     * @param $imagesid
-     * @param $date
+     * @param bool $bot
+     * @param bool $winner
+     * @param string $leftState
+     * @param string $rightState
+     * @param array $imagesid
+     * @param string $date
      * @return GameData
      */
-    public function createGameData($bot, $winner, $leftState, $rightState, $imagesid, $date) : GameData;
+    public function createGameData(bool $bot, bool $winner, string $leftState, string $rightState, array $imagesid, string $date) : GameData;
 
     /**
-     * @param $id
+     * @param int $id
      * @return GameData
      */
-    public function getGameById($id) : GameData;
+    public function getGameById(int $id) : GameData;
+
+    /**
+     * @param string $token
+     * @return GameData[]
+     */
+    public function getGamesByToken(string $token) : array;
 
     /**
      * @return array

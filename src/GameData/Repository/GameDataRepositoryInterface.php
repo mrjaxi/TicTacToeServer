@@ -14,10 +14,16 @@ interface GameDataRepositoryInterface
     public function all() : array;
 
     /**
-     * @param $id int
+     * @param int $id
      * @return GameData
      */
     public function oneById(int $id) : GameData;
+
+    /**
+     * @param string $token
+     * @return GameData[]
+     */
+    public function findGamesByToken(string $token) : array;
 
     /**
      * @param GameData $gamedata

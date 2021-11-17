@@ -32,37 +32,66 @@ class GameController extends AbstractController
         try {
             switch ($name) {
                 case "saveGameData":
-                    $bot = $request->query->get('bot');
-                    $winner = $request->query->get('winner');
+                    $bot = $request->query->getBoolean('bot');
+                    $winner = $request->query->getBoolean('winner');
                     $leftState = $request->query->get('leftState');
                     $rightState = $request->query->get('rightState');
-                    $imagesid = $request->query->get('imagesID');
+                    $imagesId = $request->query->get('imagesID');
                     $date = $request->query->get('date');
 
                     $userToken = $request->query->get('token');
 
-                    if (empty($bot) || empty($winner) || empty($leftState) ||
-                        empty($rightState) || empty($imagesid) || empty($date) || empty($userToken)) {
-                        throw new \RuntimeException("Не все поля переданы");
+                    if (!isset($bot) || !isset($winner) || empty($leftState) ||
+                        empty($rightState) || empty($imagesId) || empty($date) || empty($userToken)) {
+                        throw new \RuntimeException("Не все поля переданы".$bot.$winner);
                     }
-
-                    $gamaData = $this->gameDataService->createGameData(
-                        $bot, $winner, $leftState, $rightState, $imagesid, $date
-                    );
-
-                    $gameID = $gamaData->getMatchid();
                     $userID = $this->usersService->getUserByToken($userToken)->getId();
 
+                    $imagesId = str_split($imagesId, 9);
+                    $gameData = $this->gameDataService->createGameData(
+                        $bot, $winner, $leftState, $rightState, $imagesId, $date
+                    );
+
+                    $gameID = $gameData->getMatchid();
                     $this->gameService->saveUserGame($userID, $gameID);
+
+
+                    $api_request['response'] = array(
+                        "method" => "getGamesByToken",
+                        "gameData" => $gameData
+                    );
                     break;
-                case "testGameSend":
-                    return $this->json(array("name" => $request->query->get('imagesID') . explode(",", "")));
+                case "getGamesByToken":
+                    $token = $request->query->get('token');
+
+                    if (empty($token)) {
+                        throw new \RuntimeException("Передайте token поле");
+                    }
+
+                    $api_request['response'] = array(
+                        "method" => "getGamesByToken",
+                        "games" => $this->gameDataService->getGamesByToken($token)
+                    );
+                    break;
+                case "deleteGameById":
+                    $matchId = $request->query->getInt('matchId');
+
+                    if (empty($matchId)) {
+                        throw new \RuntimeException("Передайте поле matchId");
+                    }
+
+                    $api_request['response'] = array(
+                        "method" => "getGamesByToken",
+                        // TODO: "games" => $this->gameDataService->deleteGameById($matchId)
+                    );
+                    // TODO: При удалении матча, удалить его из Game и GameData
+                    break;
                 default:
                     $api_request['response'] = array(
                         "error" => "Несуществующий api"
                     );
             }
-            return $this->json("NoError");
+            return $this->json($api_request);
         } catch (\RuntimeException $e){
             return $this->json( array("error" => $e->getMessage()) );
         }

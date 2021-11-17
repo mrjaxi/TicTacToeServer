@@ -12,7 +12,7 @@ interface GameServiceInterface
      * @param $userid
      * @return Game
      */
-    public function getUserGames(int $userid) : Game;
+    public function getUserGame(int $userid) : Game;
 
     /**
      * @param $userid

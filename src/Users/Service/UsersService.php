@@ -26,7 +26,7 @@ class UsersService implements UsersServiceInterface
      */
     public function createUser(string $userName, string $userPassword): string
     {
-        if ($this->repository->oneByUserName($userName) == true){
+        if ($this->repository->oneByUserNameBool($userName) == true){
             throw new \RuntimeException("Пользователь с таким именем существует");
         }
 
@@ -45,6 +45,7 @@ class UsersService implements UsersServiceInterface
      */
     public function loginUser(string $userName, string $userPassword): Users
     {
+        /** @var Users $user */
         $user = $this->repository->findOneByNameAndPassword($userName, $userPassword);
 
         return $user;
@@ -76,5 +77,23 @@ class UsersService implements UsersServiceInterface
         }
 
         return $this->repository->findOneByToken($token);
+    }
+
+    /**
+     * @param int $id
+     * @return string
+     */
+    public function deleteUserById(int $id) : string
+    {
+        return $this->repository->deleteById($id);
+    }
+
+    /**
+     * @param string $username
+     * @return string
+     */
+    public function deleteUserByName(string $username) : string
+    {
+        return $this->repository->deleteByName($username);
     }
 }

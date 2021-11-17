@@ -35,10 +35,24 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
      */
     public function oneById(int $id): Users
     {
-        /**
-         * @var Users $user
-         */
+        /** @var Users $user */
         $user = parent::findOneBy(['id' => $id]);
+
+        if ($user == null){
+            throw new \RuntimeException("Пользователь не найден");
+        }
+
+        return $user;
+    }
+
+    /**
+     * @param string $name
+     * @return Users
+     */
+    public function oneByUserName(string $name): Users
+    {
+        /** @var Users $user */
+        $user = parent::findOneBy(['username' => $name]);
 
         if ($user == null){
             throw new \RuntimeException("Пользователь не найден");
@@ -51,7 +65,7 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
      * @param $userName string
      * @return bool
      */
-    public function oneByUserName(string $userName): bool
+    public function oneByUserNameBool(string $userName): bool
     {
         $user = parent::findOneBy(['username' => $userName]);
 
@@ -69,16 +83,22 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
      */
     public function findOneByNameAndPassword(string $userName, string $password) : Users
     {
-        /**
-         * @var Users $user
-         */
+        $userFind = parent::findOneBy([
+            'username' => $userName
+        ]);
+
+        if ($userFind == null){
+            throw new \RuntimeException("Пользователь не найден");
+        }
+
+        /** @var Users $user */
         $user = parent::findOneBy([
             'username' => $userName,
             'password' => $password
         ]);
 
         if ($user == null){
-            throw new \RuntimeException("Пользователь не найден");
+            throw new \RuntimeException("Неверный пароль");
         }
 
         return $user;
@@ -98,7 +118,7 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
         ]);
 
         if (!isset($user)){
-            throw new \RuntimeException("Пользователя не удалось найти findOneByNameAndToken");
+            throw new \RuntimeException("Пользователя не удалось найти findOneByToken");
         }
 
         return $user;
@@ -125,5 +145,33 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
         $this->manager->flush();
 
         return $users;
+    }
+
+    /**
+     * @param int $id
+     * @return string
+     */
+    public function deleteById(int $id) : string
+    {
+        $findById = $this->oneById($id);
+
+        $this->manager->remove($findById);
+        $this->manager->flush();
+
+        return "Пользователь удалён";
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    public function deleteByName(string $name) : string
+    {
+        $findByName = $this->oneByUserName($name);
+
+        $this->manager->remove($findByName);
+        $this->manager->flush();
+
+        return "Пользователь удалён";
     }
 }

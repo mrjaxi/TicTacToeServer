@@ -37,7 +37,7 @@ class GameRepository extends ServiceEntityRepository implements GameRepositoryIn
      * @param $id int
      * @return Game
      */
-    public function findByUserId($id): Game
+    public function findOneByUserId($id): Game
     {
         /**
          * @var Game $game
@@ -46,6 +46,24 @@ class GameRepository extends ServiceEntityRepository implements GameRepositoryIn
 
         if ($game == null){
             throw new \RuntimeException("Игра не найдена");
+        }
+
+        return $game;
+    }
+
+    /**
+     * @param int $id
+     * @return Game[]
+     */
+    public function findByUserId($id): array
+    {
+        /**
+         * @var Game[] $game
+         */
+        $game = parent::findBy(['userid' => $id]);
+
+        if ($game == null){
+            throw new \RuntimeException("Игр нет");
         }
 
         return $game;

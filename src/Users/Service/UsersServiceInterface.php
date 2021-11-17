@@ -38,4 +38,16 @@ interface UsersServiceInterface
      * @return bool
      */
     public function updateUserCredentials(Users $user) : bool;
+
+    /**
+     * @param int $id
+     * @return string
+     */
+    public function deleteUserById(int $id) : string;
+
+    /**
+     * @param string $username
+     * @return string
+     */
+    public function deleteUserByName(string $username) : string;
 }

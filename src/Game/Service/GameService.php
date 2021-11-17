@@ -20,9 +20,9 @@ class GameService implements GameServiceInterface
      * @param $userid
      * @return Game
      */
-    public function getUserGames(int $userid): Game
+    public function getUserGame(int $userid): Game
     {
-        return $this->repository->findByUserId($userid);
+        return $this->repository->findOneByUserId($userid);
     }
 
     /**
