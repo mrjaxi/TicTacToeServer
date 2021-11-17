@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Game\Service\GameServiceInterface;
-use App\GameData\Model\GameData;
 use App\GameData\Service\GameDataServiceInterface;
 use App\Users\Service\UsersServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,11 +37,12 @@ class GameController extends AbstractController
                     $leftState = $request->query->get('leftState');
                     $rightState = $request->query->get('rightState');
                     $imagesid = $request->query->get('imagesID');
-                    $date = \DateTime::createFromFormat('U', $request->query->get('date'));
+                    $date = $request->query->get('date');
 
                     $userToken = $request->query->get('token');
 
-                    if (!isset($bot, $winner, $leftState, $rightState, $imagesid, $date, $userToken)) {
+                    if (empty($bot) || empty($winner) || empty($leftState) ||
+                        empty($rightState) || empty($imagesid) || empty($date) || empty($userToken)) {
                         throw new \RuntimeException("Не все поля переданы");
                     }
 

@@ -25,13 +25,13 @@ class AuthController extends AbstractController
     {
         try {
             $userLogin = $request->query->get('userLogin');
-            $userPassword = md5($request->query->get('userPassword'));
+            $userPassword = $request->query->get('userPassword');
 
-            if (!isset($userLogin, $userPassword)) {
+            if (empty($userLogin) || empty($userPassword)) {
                 throw new \RuntimeException("Поля userLogin и userPassword должны быть не пустыми");
             }
 
-            $user = $this->usersService->loginUser($userLogin, $userPassword);
+            $user = $this->usersService->loginUser($userLogin, md5($userPassword));
 
             if ($user) {
                 try {
@@ -64,13 +64,17 @@ class AuthController extends AbstractController
     {
         try {
             $userLogin = $request->query->get('userLogin');
-            $userPassword = md5($request->query->get('userPassword'));
+            $userPassword = $request->query->get('userPassword');
 
-            if (!isset($userLogin, $userPassword)) {
+            if (empty($userLogin) || empty($userPassword)) {
                 throw new \RuntimeException("Поля userLogin и userPassword должны быть не пустыми");
             }
 
-            $returnValue = $this->usersService->createUser($userLogin, $userPassword);
+            if (strlen($userPassword) < 8){
+                throw new \RuntimeException("Пароль должен иметь не меньше 8 символов");
+            }
+
+            $returnValue = $this->usersService->createUser($userLogin, md5($userPassword));
 
             $api_request['response'] = array(
                 "method" => "registerUser",

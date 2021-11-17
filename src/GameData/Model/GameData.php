@@ -3,7 +3,6 @@
 
 namespace App\GameData\Model;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -52,8 +51,8 @@ class GameData
     private $imagesid;
 
     /**
-     * @var DateTime
-     * @ORM\Column(type="time")
+     * @var string
+     * @ORM\Column(type="string")
      */
     private $date;
 
@@ -165,17 +164,17 @@ class GameData
     }
 
     /**
-     * @return DateTime
+     * @return string
      */
-    public function getDate(): DateTime
+    public function getDate(): string
     {
         return $this->date;
     }
 
     /**
-     * @param DateTime $date
+     * @param string $date
      */
-    public function setDate(DateTime $date): void
+    public function setDate(string $date): void
     {
         $this->date = $date;
     }
