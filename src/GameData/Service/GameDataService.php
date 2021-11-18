@@ -15,20 +15,21 @@ class GameDataService implements GameDataServiceInterface
     }
 
     /**
-     * @param $bot
-     * @param $winner
-     * @param $leftState
-     * @param $rightState
-     * @param $imagesid
-     * @param $date
+     * @param bool $bot
+     * @param bool $winner
+     * @param string $leftState
+     * @param string $rightState
+     * @param array $imagesId
+     * @param string $date
+     * @param int $userId
      * @return GameData
      */
-    public function createGameData($bot, $winner, $leftState, $rightState, $imagesid, $date): GameData
+    public function createGameData(bool $bot,bool $winner,string $leftState,string $rightState,array $imagesId,string $date,int $userId): GameData
     {
-        if (!isset($bot, $winner, $leftState, $rightState, $imagesid, $date)){
+        if (!isset($bot, $winner, $leftState, $rightState, $imagesId, $date)){
             throw new \RuntimeException("Не все поля заполнены createGameData");
         } else {
-            $gamedata = new GameData($bot, $winner, $leftState, $rightState, $imagesid, $date);
+            $gamedata = new GameData($bot, $winner, $leftState, $rightState, $imagesId, $date, $userId);
             $this->repository->save($gamedata);
 
             return $gamedata;
@@ -56,5 +57,14 @@ class GameDataService implements GameDataServiceInterface
     public function getGamesByToken(string $token) : array
     {
         return $this->repository->findGamesByToken($token);
+    }
+
+    /**
+     * @param int $matchId
+     * @return string
+     */
+    public function deleteGameById(int $matchId) : string
+    {
+        return $this->repository->deleteById($matchId);
     }
 }

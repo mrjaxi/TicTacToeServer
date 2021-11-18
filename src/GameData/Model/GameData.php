@@ -58,6 +58,12 @@ class GameData
     private $date;
 
     /**
+     * @var int
+     * @ORM\Column(name="userId",type="integer")
+     */
+    private $userId;
+
+    /**
      * GameData constructor.
      * @param bool $bot
      * @param bool $winner
@@ -65,8 +71,9 @@ class GameData
      * @param string $rightState
      * @param array $imagesId
      * @param string $date
+     * @param int $userId
      */
-    public function __construct(bool $bot,bool $winner,string $leftState,string $rightState,array $imagesId,string $date)
+    public function __construct(bool $bot,bool $winner,string $leftState,string $rightState,array $imagesId,string $date,int $userId)
     {
         $this->setBot($bot);
         $this->setWinner($winner);
@@ -74,6 +81,7 @@ class GameData
         $this->setRightState($rightState);
         $this->setImagesid($imagesId);
         $this->setDate($date);
+        $this->setUserId($userId);
     }
 
     /**
@@ -178,5 +186,21 @@ class GameData
     public function setDate(string $date): void
     {
         $this->date = $date;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserId(): int
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param int $userId
+     */
+    public function setUserId(int $userId): void
+    {
+        $this->userId = $userId;
     }
 }

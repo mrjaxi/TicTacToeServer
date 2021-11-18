@@ -26,7 +26,12 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
      */
     public function all(): array
     {
-        return parent::findAll();
+        /** @var Users[] $users */
+        $users = parent::findAll();
+        if($users == null)
+            throw new \RuntimeException("Пользователей нет");
+
+        return $users;
     }
 
     /**
@@ -38,9 +43,8 @@ class UsersRepository extends ServiceEntityRepository implements UserRepositoryI
         /** @var Users $user */
         $user = parent::findOneBy(['id' => $id]);
 
-        if ($user == null){
+        if ($user == null)
             throw new \RuntimeException("Пользователь не найден");
-        }
 
         return $user;
     }

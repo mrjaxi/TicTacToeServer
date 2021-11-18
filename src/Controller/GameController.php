@@ -49,7 +49,7 @@ class GameController extends AbstractController
 
                     $imagesId = str_split($imagesId, 9);
                     $gameData = $this->gameDataService->createGameData(
-                        $bot, $winner, $leftState, $rightState, $imagesId, $date
+                        $bot, $winner, $leftState, $rightState, $imagesId, $date,$userID
                     );
 
                     $gameID = $gameData->getMatchid();
@@ -57,8 +57,14 @@ class GameController extends AbstractController
 
 
                     $api_request['response'] = array(
-                        "method" => "getGamesByToken",
-                        "gameData" => $gameData
+                        "method" => "saveGameData",
+                        "response" => $gameData
+                    );
+                    break;
+                case "getAllGames":
+                    $api_request['response'] = array(
+                        "method" => "getUsers",
+                        "response" => $this->gameDataService->getGamesData()
                     );
                     break;
                 case "getGamesByToken":
@@ -70,7 +76,7 @@ class GameController extends AbstractController
 
                     $api_request['response'] = array(
                         "method" => "getGamesByToken",
-                        "games" => $this->gameDataService->getGamesByToken($token)
+                        "response" => $this->gameDataService->getGamesByToken($token)
                     );
                     break;
                 case "deleteGameById":
@@ -82,9 +88,8 @@ class GameController extends AbstractController
 
                     $api_request['response'] = array(
                         "method" => "getGamesByToken",
-                        // TODO: "games" => $this->gameDataService->deleteGameById($matchId)
+                        "response" => $this->gameDataService->deleteGameById($matchId)
                     );
-                    // TODO: При удалении матча, удалить его из Game и GameData
                     break;
                 default:
                     $api_request['response'] = array(

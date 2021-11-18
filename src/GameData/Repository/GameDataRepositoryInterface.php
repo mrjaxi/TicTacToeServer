@@ -36,4 +36,10 @@ interface GameDataRepositoryInterface
      * @return GameData
      */
     public function update(GameData $gamedata) : GameData;
+
+    /**
+     * @param int $matchId
+     * @return string
+     */
+    public function deleteById(int $matchId) : string ;
 }

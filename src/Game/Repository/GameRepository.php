@@ -20,6 +20,20 @@ class GameRepository extends ServiceEntityRepository implements GameRepositoryIn
     }
 
     /**
+     * @return Game[]
+     */
+    public function all(): array
+    {
+        /** @var Game[] $gameData */
+        $game = parent::findAll();
+        if ($game == null){
+            throw new \RuntimeException("Нет игр");
+        }
+
+        return $gameData;
+    }
+
+    /**
      * @param $id int
      * @return Game
      */

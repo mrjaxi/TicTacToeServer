@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\GameData\Service\GameDataServiceInterface;
 use App\Users\Service\UsersServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,13 +17,15 @@ class ApiController extends AbstractController
 {
 
     private $usersService;
+    private $gameDataService;
 
-    public function __construct(UsersServiceInterface $usersService)
+    public function __construct(UsersServiceInterface $usersService, GameDataServiceInterface $gameDataService)
     {
         $this->usersService = $usersService;
+        $this->gameDataService = $gameDataService;
     }
 
-    #[Route('/api/method.{name<\w+>}', name: 'api')]
+     #[Route('/api/method.{name<\w+>}', name: 'api')]
     public function api(string $name, Request $request): JsonResponse
     {
         try {
@@ -30,7 +33,7 @@ class ApiController extends AbstractController
                 case "getUsers":
                     $api_request['response'] = array(
                         "method" => "getUsers",
-                        "users" => $this->usersService->getUsers()
+                        "response" => $this->usersService->getUsers()
                     );
                     break;
                 case "deleteUser":
@@ -41,17 +44,16 @@ class ApiController extends AbstractController
                             throw new \RuntimeException("Поля id или username должны присутствовать");
                         $api_request['response'] = array(
                             "method" => "deleteUser",
-                            "state" => $this->usersService->deleteUserByName($username)
+                            "response" => $this->usersService->deleteUserByName($username)
                         );
                         break;
                     } else {
                         $api_request['response'] = array(
                             "method" => "deleteUser",
-                            "state" => $this->usersService->deleteUserById($id)
+                            "response" => $this->usersService->deleteUserById($id)
                         );
                         break;
                     }
-                    // TODO: при удалении пользователя удалять все его игры из Game и GameData
                 default:
                     $api_request['response'] = array(
                         "error" => "Несуществующий api"

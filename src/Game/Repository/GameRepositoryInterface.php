@@ -8,6 +8,11 @@ use App\Game\Model\Game;
 interface GameRepositoryInterface
 {
     /**
+     * @return Game[]
+     */
+    public function all(): array;
+
+    /**
      * @param int $id
      * @return Game
      */

@@ -33,7 +33,13 @@ class GameDataRepository extends ServiceEntityRepository implements GameDataRepo
      */
     public function all(): array
     {
-        return parent::findAll();
+        /** @var GameData[] $gameData */
+        $gameData = parent::findAll();
+        if ($gameData == null){
+            throw new \RuntimeException("Нет игр");
+        }
+
+        return $gameData;
     }
 
     /**
@@ -42,9 +48,7 @@ class GameDataRepository extends ServiceEntityRepository implements GameDataRepo
      */
     public function oneById(int $id): GameData
     {
-        /**
-         * @var GameData $gamedata
-         */
+        /** @var GameData $gamedata */
         $gamedata = parent::findOneBy(['matchid' => $id]);
 
         if ($gamedata == null){
@@ -95,5 +99,19 @@ class GameDataRepository extends ServiceEntityRepository implements GameDataRepo
         $this->manager->flush();
 
         return $gamedata;
+    }
+
+    /**
+     * @param int $matchId
+     * @return string
+     */
+    public function deleteById(int $matchId) : string
+    {
+        $match = $this->oneById($matchId);
+
+        $this->manager->remove($match);
+        $this->manager->flush();
+
+        return "Игра удалена";
     }
 }
