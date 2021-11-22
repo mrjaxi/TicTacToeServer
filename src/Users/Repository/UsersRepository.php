@@ -8,7 +8,6 @@ use App\Users\Model\Users;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
-use http\Exception\RuntimeException;
 
 class UsersRepository extends ServiceEntityRepository implements UserRepositoryInterface
 {

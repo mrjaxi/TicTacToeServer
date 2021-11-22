@@ -7,13 +7,12 @@ namespace App\Users\Service;
 use App\Users\Model\Users;
 use App\Users\Repository\UserRepositoryInterface;
 use Exception;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UsersService implements UsersServiceInterface
 {
     private $repository;
 
-    public function __construct(UserRepositoryInterface $repository, UserPasswordEncoderInterface $encoder)
+    public function __construct(UserRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }

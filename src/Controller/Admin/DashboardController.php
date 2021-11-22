@@ -32,6 +32,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Game', 'fa fa-home', Game::class);
         yield MenuItem::linkToCrud('GameData', 'fa fa-home', GameData::class);
         yield MenuItem::linkToCrud('Users', 'fa fa-home', Users::class);
-
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Users\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 
 /**
  * Class Users
@@ -39,9 +40,9 @@ class Users
 
     /**
      * User constructor.
-     * @param $username
-     * @param $password
-     * @param $usertoken
+     * @param string $username
+     * @param string $password
+     * @param string $usertoken
      */
     public function __construct(string $username = "", string $password = "", string $usertoken = "")
     {
@@ -87,7 +88,7 @@ class Users
      */
     public function setPassword($password): void
     {
-        $this->password = $password;
+        $this->password = md5($password);
     }
 
     /**
@@ -100,9 +101,13 @@ class Users
 
     /**
      * @param string $usertoken
+     * @throws Exception
      */
     public function setUsertoken(string $usertoken): void
     {
+        if ($usertoken = "auto"){
+            $usertoken = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+        }
         $this->usertoken = $usertoken;
     }
 }
