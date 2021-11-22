@@ -2,6 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use App\Game\Model\Game;
+use App\GameData\Model\GameData;
+use App\Users\Model\Users;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -26,7 +29,9 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+        yield MenuItem::linkToCrud('Game', 'fa fa-home', Game::class);
+        yield MenuItem::linkToCrud('GameData', 'fa fa-home', GameData::class);
+        yield MenuItem::linkToCrud('Users', 'fa fa-home', Users::class);
+
     }
 }

@@ -73,7 +73,9 @@ class GameData
      * @param string $date
      * @param int $userId
      */
-    public function __construct(bool $bot,bool $winner,string $leftState,string $rightState,array $imagesId,string $date,int $userId)
+    public function __construct(bool $bot = false, bool $winner = false,
+                                string $leftState = "", string $rightState = "" ,
+                                array $imagesId = array(), string $date = "", int $userId = 0)
     {
         $this->setBot($bot);
         $this->setWinner($winner);

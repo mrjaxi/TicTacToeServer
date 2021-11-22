@@ -43,7 +43,7 @@ class Users
      * @param $password
      * @param $usertoken
      */
-    public function __construct($username, $password, $usertoken)
+    public function __construct(string $username = "", string $password = "", string $usertoken = "")
     {
         $this->username = $username;
         $this->password = $password;

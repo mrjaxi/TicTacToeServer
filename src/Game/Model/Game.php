@@ -39,7 +39,7 @@ class Game
      * @param $userid
      * @param $relmatchid
      */
-    public function __construct($userid, $relmatchid)
+    public function __construct(int $userid = 0, int $relmatchid = 0)
     {
         $this->userid = $userid;
         $this->relmatchid = $relmatchid;
@@ -64,7 +64,7 @@ class Game
     /**
      * @return mixed
      */
-    public function getMatchID()
+    public function getRelmatchid()
     {
         return $this->relmatchid;
     }
