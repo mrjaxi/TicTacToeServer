@@ -34,3 +34,9 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Game/Model'
                 prefix: 'App\Game\Model'
                 alias: App\Game\Model
+            Admin:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'App\Entity'
+                alias: App\Entity
