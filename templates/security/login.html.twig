@@ -1,42 +1,124 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}LogIn Admin{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+    <style>
+        .form-input{
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #363237;;
+        }
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+        .inputs{
+            display: flex;
+            flex-direction: column;
+        }
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+        .inpItem{
+            margin: 15px;
+            box-shadow: 0px 6px 15px 1px rgba(0, 0, 0, 0.25);
+        }
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+        .buttons{
+            display: flex;
+            justify-content: center;
+        }
 
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
+        .button-submit{
+            width: 130px;
+            height: 40px;
+            margin-top: 20px;
+            border-radius: 30px;
+            border: none;
+            background-color: #FFD04A;
+            box-shadow: 0px 6px 15px 1px rgba(0, 0, 0, 0.25);
+        }
 
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
+        .field-input{
+            width: 250px;
+            height: 40px;
+            border-radius: 30px;
+            padding-left: 8px;
+            border: none;
+            outline: none;
+            text-align: center;
+        }
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+        .logo-image{
+            width: 300px;
+            height: 300px;
+        }
+
+        .logo-elements{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+        }
+
+        .logo-div{
+            justify-content: space-around;
+            align-items: center;
+            align-content: center;
+            text-align: center;
+            flex-direction: column;
+            margin-bottom: 40px;
+        }
+
+        span{
+            display: block;
+            color: whitesmoke;
+        }
+
+        .logo-text{
+            font-family: "sans-serif";
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .errmessage{
+            font-family: "sans-serif";
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            color: rgb(255, 43, 43);
+            font-size: 20px;
+            font-weight: 600;
+        }
+    </style>
+
+    <div class="form-input">
+        <form method="post">
+            <div class="inputs">
+                <div class="logo-div">
+                    <img src="{{ asset('bundles/easyadmin/images/icon.png') }}" width="150" height="150" style="margin-bottom: 20px;">
+                    <span class="logo-text">TicTacToe</span>
+                    <span class="logo-text">Admin Panel</span>
+                </div>
+                {% if error %}
+                <div class="errmessage">
+                    <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+                </div>
+                {% endif %}
+                <label for="inputEmail"></label>
+                <input class="field-input inpItem" placeholder="E-MAIL" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                <label for="inputPassword"></label>
+                <input class="field-input inpItem" placeholder="PASSWORD" type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                <div class="buttons">
+                    <input value="LOGIN" class="button-submit" type="submit">
+                </div>
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}"
+                >
+            </div>
+        </form>
+    </div>
 {% endblock %}
