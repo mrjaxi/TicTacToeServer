@@ -46,7 +46,7 @@ class AuthController extends AbstractController
                     "method" => "loginUser",
                     "userName" => $userLogin,
                     "userPassword" => $userPassword,
-                    "token" => $token
+                    "token" => $user->getUsertoken()
                 );
             } else throw new \RuntimeException("Неверный логин или пароль pass: {$userPassword}");
 
