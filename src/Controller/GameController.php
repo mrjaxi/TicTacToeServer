@@ -47,9 +47,9 @@ class GameController extends AbstractController
                     }
                     $userID = $this->usersService->getUserByToken($userToken)->getId();
 
-                    $imagesId = str_split($imagesId, 9);
+                    $imagesIdArr = explode(",",$imagesId);
                     $gameData = $this->gameDataService->createGameData(
-                        $bot, $winner, $leftState, $rightState, $imagesId, $date,$userID
+                        $bot, $winner, $leftState, $rightState, $imagesIdArr, $date,$userID
                     );
 
                     $gameID = $gameData->getMatchid();
