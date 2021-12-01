@@ -69,7 +69,7 @@ class AuthController extends AbstractController
                 throw new \RuntimeException("Поля userLogin и userPassword должны быть не пустыми");
             }
 
-            if (strlen($userPassword) < 4){
+            if (mb_strlen($userPassword, "UTF-8") < 4){
                 throw new \RuntimeException("Пароль должен иметь не меньше 4 символов");
             }
 
